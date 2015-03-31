@@ -19,7 +19,10 @@ Route::get('menu', 'PagesController@menu');
 Route::get('menu/{type}', 'MenuController@displayType');
 
 Route::get('catering', 'PagesController@catering');
+Route::get('catering/empty', 'CateringController@deleteCart');
+Route::get('catering/checkout', 'CateringController@checkout');
 Route::post('catering', 'CateringController@addToCart');
+
 
 Route::get('merch', 'PagesController@merch');
 

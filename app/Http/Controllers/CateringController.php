@@ -56,4 +56,30 @@ class CateringController extends Controller {
 		//return($cart[0]);
 
 	}
+
+	//function to empty cart
+	public function deleteCart(){
+		//empty cart
+		\Session::forget('cart');
+		//set page title
+		$page = 'catering';
+		//create new instance of the products model
+		$products = new \App\Products;
+		//get all items
+		$menu = $products::get();
+		//get cart
+		$cart = \Session::get('cart');
+		//return view of page
+		return (view('catering', ['page' => $page, 'menu' => $menu, 'cart' => $cart]));
+		//return($cart[0]);
+	}
+
+	public function checkout(){
+		//get the cart
+		$cart = \Session::get('cart');
+		//set title
+		$page = 'checkout';
+		//display page
+		return (view('checkout', ['page' => $page, 'cart' => $cart]));
+	}
 }

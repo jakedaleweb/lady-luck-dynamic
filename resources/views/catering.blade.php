@@ -41,7 +41,7 @@
 			@foreach($cart as $item)
 				<tr>
 					<td>{{ $item['name'] }}</td>
-					<td>${{ number_format($item['price'], 2) }}</td>
+					<td>${{number_format($item['price'] * $item['quantity'],2)}}</td>
 					<td>{{$item['quantity']}}</td>
 				</tr>
 				<?php 
@@ -50,9 +50,10 @@
 				?>
 			@endforeach
 			<tr>
-				<td><a class="emptyButton" href="/menu/empty">Empty</a></td>
+				<td><a class="emptyButton" href="/catering/empty">Empty</a></td>
 				<td>${{number_format($totalPrice, 2)}}</td>
-				<td>items:{{$totalQuan}}<a class="checkoutButton" href="/checkout">Checkout</a></td>
+				<td>items:{{$totalQuan}}</td>
+				<td><a class="checkoutButton" href="/catering/checkout">Checkout</a></td>
 			</tr>
 		</table>
 		@endif
