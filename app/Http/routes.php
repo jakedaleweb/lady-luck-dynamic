@@ -16,9 +16,10 @@ Route::get('/', 'PagesController@index');
 Route::get('home', 'PagesController@index');
 
 Route::get('menu', 'PagesController@menu');
-Route::get('menu/{type}', 'MenuController@index');
+Route::get('menu/{type}', 'MenuController@displayType');
 
 Route::get('catering', 'PagesController@catering');
+Route::post('catering', 'CateringController@addToCart');
 
 Route::get('merch', 'PagesController@merch');
 

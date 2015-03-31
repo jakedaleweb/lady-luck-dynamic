@@ -7,7 +7,7 @@ class MenuController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index($type)
+	public function displayType($type)
 	{
 		//create new instance of the products model
 		$products = new \App\Products;

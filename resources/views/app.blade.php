@@ -17,23 +17,23 @@
 		<img src="{{ asset('img/logo.png') }}" alt="Illustrated Lady Luck Logo">
 		<div id="mobile-list" class="hidden"> 
 			<ul>
-				<li><a href="home">home</a></li>
-				<li><a href="menu">menu</a></li>
-				<li><a href="catering">catering</a></li>
-				<li><a href="merch">merch</a></li>
-				<li><a href="locations">locations</a></li>
-				<li><a href="contact">contact</a></li>
+				<li><a href="/home">home</a></li>
+				<li><a href="/menu">menu</a></li>
+				<li><a href="/catering">catering</a></li>
+				<li><a href="/merch">merch</a></li>
+				<li><a href="/locations">locations</a></li>
+				<li><a href="/contact">contact</a></li>
 			</ul>
 		</div>
 		
 		<nav>
 			<ul>
-				<li><a {!! $page == 'home' 			? 'class="active"' : ''!!} href="home">home</a></li>
-				<li><a {!! $page == 'menu' 			? 'class="active"' : ''!!} href="menu">menu</a></li>
-				<li><a {!! $page == 'catering' 		? 'class="active"' : ''!!} href="catering">catering</a></li>
-				<li><a {!! $page == 'merch' 		? 'class="active"' : ''!!} href="merch">merch</a></li>
-				<li><a {!! $page == 'locations' 	? 'class="active"' : ''!!} href="locations">locations</a></li>
-				<li><a {!! $page == 'contact'	 	? 'class="active"' : ''!!} href="contact">contact</a></li>
+				<li><a {!! $page == 'home' 			? 'class="active"' : ''!!} href="/home">home</a></li>
+				<li><a {!! $page == 'menu' 			? 'class="active"' : ''!!} href="/menu">menu</a></li>
+				<li><a {!! $page == 'catering' 		? 'class="active"' : ''!!} href="/catering">catering</a></li>
+				<li><a {!! $page == 'merch' 		? 'class="active"' : ''!!} href="/merch">merch</a></li>
+				<li><a {!! $page == 'locations' 	? 'class="active"' : ''!!} href="/locations">locations</a></li>
+				<li><a {!! $page == 'contact'	 	? 'class="active"' : ''!!} href="/contact">contact</a></li>
 			</ul>
 		</nav>	
 	</header>
