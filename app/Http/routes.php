@@ -21,7 +21,8 @@ Route::get('menu/{type}', 'MenuController@displayType');
 Route::get('catering', 'PagesController@catering');
 Route::get('catering/empty', 'CateringController@deleteCart');
 Route::get('catering/checkout', 'CateringController@checkout');
-Route::post('catering', 'CateringController@addToCart');
+Route::post('catering', 'CateringController@cartFunctions');
+Route::post('catering/checkout', 'CateringController@processCaterForm');
 
 
 Route::get('merch', 'PagesController@merch');

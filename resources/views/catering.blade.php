@@ -43,6 +43,16 @@
 					<td>{{ $item['name'] }}</td>
 					<td>${{number_format($item['price'] * $item['quantity'],2)}}</td>
 					<td>{{$item['quantity']}}</td>
+					<td>
+						<form action="/catering" method="post">
+							<input type="number" name="quantity" min="0" step="1" value="{{$item['quantity']}}"/>
+							<input type="submit" name="update" value="update">
+							<input type="hidden" name="productID" value="{{$item['productID']}}" />
+							<input type="hidden" name="productName" value="{{$item['name']}}" />
+							<input type="hidden" name="productPrice" value="{{$item['price']}}" />
+							<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+						</form>
+					</td>
 				</tr>
 				<?php 
 					$totalQuan 	+= $item['quantity']; 
