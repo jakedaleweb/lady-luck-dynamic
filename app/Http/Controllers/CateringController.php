@@ -126,16 +126,12 @@ class CateringController extends Controller {
 		$cart = \Session::get('cart');
 		//set title
 		$page = 'checkout';
-		$message ="not working";
-		if(\Input::has('submitOrder')){
-			$message = 'working';
-		}
 		//display page
-		return (view('checkout', ['page' => $page, 'cart' => $cart, 'message' => $message]));
+		return (view('checkout', ['page' => $page, 'cart' => $cart]));
 	}
 
 	public function processCaterForm(Requests\OrderCateringRequest $request){
-		return redirect('catering');
-		//return ($messages);
+
 	}
+
 }

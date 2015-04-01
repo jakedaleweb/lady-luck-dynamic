@@ -19,45 +19,45 @@
 			$totalQuan	 	+= $item['quantity'];  
 		?>
 	@endforeach
-	{{$message}}
+
 		<h2>Total Cost:${{$totalPrice}}</h2>
 		<h2>Total items: {{$totalQuan}}</h2>
 		<h2></h2>
 		<form action="/catering/checkout" method="post" id="checkoutForm">
 			<p>
 				<label for="orderName">Your Name: </label>
-				{!!$errors->first('orderName', '<span>:message</span>')!!}	
 			</p>
 			<p>
-				<input type="text" id="orderName" name="orderName" />
+				<input type="text" id="orderName" value="{{\Input::old('orderName')}}" name="orderName" />
+				{!!$errors->first('orderName', '<span>:message</span>')!!}	
 			</p>
 
 			<p>
 				<label for="orderAddress">Catering Address: </label>
 			</p>
 			<p>
-				<textarea type="text" id="orderAddress" name="orderAddress"> </textarea>
+				<textarea type="text" id="orderAddress" name="orderAddress">{{\Input::old('orderAddress')}}</textarea>
 				{!!$errors->first('orderAddress', '<span>:message</span>')!!}	
 			</p>
 			<p>
 				<label for="orderEmail">Email: </label>
 			</p>
 			<p>
-				<input type="email" id="orderEmail" name="orderEmail"/>
+				<input type="email" id="orderEmail" value="{{\Input::old('orderEmail')}}" name="orderEmail"/>
 				{!!$errors->first('orderEmail', '<span>:message</span>')!!}	
 			</p>
 			<p>
 				<label for="orderDate">When would you like the order? </label>
 			</p>
 			<p>
-				<input type="date" value="<?php echo date('Y-m-d'); ?>" name="orderDate" id="orderDate"/>
+				<input type="date" value="<?php echo date('Y-m-d'); ?>" value="{{\Input::old('orderDate')}}" name="orderDate" id="orderDate"/>
 				{!!$errors->first('orderDate', '<span>:message</span>')!!}
 			</p>
 			<p>
 				<label for="deliver">Delivery</label>
-				<input id="deliver" checked="checked" type="radio" name="delivery" value="deliver" />
+				<input id="deliver" {!! \Input::old('delivery') == 'deliver' ? 'checked="checked"' : '' !!} type="radio" name="delivery" value="deliver" />
 				<label for="pickup">Pickup</label>
-				<input id="pickup" type="radio" name="delivery" value="pickup" />
+				<input id="pickup" {!! \Input::old('delivery') == 'pickup' ? 'checked="checked"' : '' !!} type="radio" name="delivery" value="pickup" />
 				{!!$errors->first('delivery', '<span>:message</span>')!!}
 			</p>
 			<p>
