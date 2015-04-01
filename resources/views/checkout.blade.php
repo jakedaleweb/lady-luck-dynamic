@@ -50,7 +50,7 @@
 				<label for="orderDate">When would you like the order? </label>
 			</p>
 			<p>
-				<input type="date" value="<?php echo date('Y-m-d'); ?>" value="{{\Input::old('orderDate')}}" name="orderDate" id="orderDate"/>
+				<input type="date" value="<?php echo date('Y-m-d'); ?>" name="orderDate" id="orderDate"/>
 				{!!$errors->first('orderDate', '<span>:message</span>')!!}
 			</p>
 			<p>
