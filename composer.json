@@ -14,7 +14,8 @@
 	},
 	"autoload": {
 		"classmap": [
-			"database"
+			"database",
+			"app/px/PxPay_Curl.inc.php"
 		],
 		"psr-4": {
 			"App\\": "app/"

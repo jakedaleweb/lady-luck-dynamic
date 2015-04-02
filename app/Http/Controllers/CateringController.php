@@ -127,11 +127,92 @@ class CateringController extends Controller {
 		//set title
 		$page = 'checkout';
 		//display page
+		//if we have come back from the payment page
+		if(isset($_GET['result']) && isset($_GET['userid'])){
+			//if cart not empty
+			if(\Session::has('cart')){
+				//run the function that processes the order
+				$this -> addCartToDB();
+				return redirect('checkout/success');
+			} else {
+				return redirect('checkout');
+			}
+		}
 		return (view('checkout', ['page' => $page, 'cart' => $cart]));
 	}
 
 	public function processCaterForm(Requests\OrderCateringRequest $request){
-
+		//create instance of pxpay class
+		$pxpay = new \PxPay_Curl('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', 'Natcoll_Dev', 'fb9f7649ebcdcca74f427183b37c6c5fca3db775e1e04e09eadc612ac786c420');
+		//run redirect function
+		$urlToPaymentGateway = $this -> redirectToPxPay($pxpay);
+		//redirect to payment page
+		return \Redirect::away($urlToPaymentGateway);
 	}
 
+	public function redirectToPxPay($pxpay){
+		// Create new request object
+		$request = new \PxPayRequest();
+		// Variable to hold the grand total
+		$grandTotal = 0;
+		// Loop through each item and add the total cost to grand total
+		$cart = \Session::get('cart');
+		foreach( $cart as $item ) {
+			$grandTotal += $item['quantity'] * $item['price'];
+		}
+		// Settings for the transaction
+		$request->setAmountInput($grandTotal);
+		$request->setTxnType( 'Purchase' );
+		$request->setCurrencyInput( 'NZD' );
+		$request->setUrlFail( 'http://localhost:8000/catering/checkout' );
+		$request->setUrlSuccess( 'http://localhost:8000/catering/checkout' );
+		$request->setTxnData1( \Request::input('orderName') );
+		$request->setTxnData2( \Request::input('orderAddress') );
+		$request->setTxnData3( \Request::input('orderEmail') );
+		// Convert the request into XML
+		$request_string = $pxpay->makeRequest($request);
+		// Send the request
+		$response = new \MifMessage($request_string);
+		// Recieve a response with secure URL to go to for payment
+		return $response->get_element_text("URI");
+		// Redirect the visitor to paymentexpress
+		//return $urlToPaymentGateway;
+	}
+
+	public function addCartToDB(){
+		//obtain the result
+		$response = \Input::get('result');
+		//create instance of pxpay class
+		$pxpay = new \PxPay_Curl('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', 'Natcoll_Dev', 'fb9f7649ebcdcca74f427183b37c6c5fca3db775e1e04e09eadc612ac786c420');
+		//convert the response in to a php object
+		$response = $pxpay->getResponse($response);
+		//was transaction successful?
+		if($response->getSuccess()==1){
+			//add order to DB
+			$order = new \App\Orders;
+			//set up new order in DB
+			$order->customerName 	= $response->getTxnData1();
+			$order->customerAddress = $response->getTxnData2();
+			$order->customerEmail 	= $response->getTxnData3();
+			$order->deliveryDate 	= $response->getTxnData4();//nope
+			$order->delivery 		= $response->getTxnData5();//nope
+			$order->status 			= 'paid';
+			//save this info into the DB
+			$order->save();
+			//get the id of inserted record
+			$id = $order->id;
+			//loop through each item in the cart, adding it to the orderedProducts table
+			$cart = \Session::get('cart');
+			foreach($cart as $item){
+				
+			}
+			//clear the cart
+			\Session::forget('cart');
+			return true;
+		} else {
+			//not paid
+			return false;
+		}
+	}
+	
 }
