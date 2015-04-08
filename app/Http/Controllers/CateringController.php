@@ -133,9 +133,9 @@ class CateringController extends Controller {
 			if(\Session::has('cart')){
 				//run the function that processes the order
 				$this -> addCartToDB();
-				return redirect('checkout/success');
+				return redirect('catering/checkout/success');
 			} else {
-				return redirect('checkout');
+				return redirect('/catering');
 			}
 		}
 		return (view('checkout', ['page' => $page, 'cart' => $cart]));
@@ -146,6 +146,7 @@ class CateringController extends Controller {
 		$pxpay = new \PxPay_Curl('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', 'Natcoll_Dev', 'fb9f7649ebcdcca74f427183b37c6c5fca3db775e1e04e09eadc612ac786c420');
 		//run redirect function
 		$urlToPaymentGateway = $this -> redirectToPxPay($pxpay);
+		//return(\Session::get('delivery'));
 		//redirect to payment page
 		return \Redirect::away($urlToPaymentGateway);
 	}
@@ -169,6 +170,9 @@ class CateringController extends Controller {
 		$request->setTxnData1( \Request::input('orderName') );
 		$request->setTxnData2( \Request::input('orderAddress') );
 		$request->setTxnData3( \Request::input('orderEmail') );
+
+		\Session::put('orderDate', \Request::input('orderDate'));
+		\Session::put('delivery', \Request::input('delivery'));
 		// Convert the request into XML
 		$request_string = $pxpay->makeRequest($request);
 		// Send the request
@@ -194,8 +198,8 @@ class CateringController extends Controller {
 			$order->customerName 	= $response->getTxnData1();
 			$order->customerAddress = $response->getTxnData2();
 			$order->customerEmail 	= $response->getTxnData3();
-			$order->deliveryDate 	= $response->getTxnData4();//nope
-			$order->delivery 		= $response->getTxnData5();//nope
+			$order->deliveryDate 	= \Session::get('orderDate');
+			$order->delivery 		= \Session::get('delivery');
 			$order->status 			= 'paid';
 			//save this info into the DB
 			$order->save();
@@ -204,15 +208,22 @@ class CateringController extends Controller {
 			//loop through each item in the cart, adding it to the orderedProducts table
 			$cart = \Session::get('cart');
 			foreach($cart as $item){
-				
+				$product = new \App\OrderedProducts;
+				$product->productID 	= $item['productID'];
+				$product->quantity	 	= $item['quantity'];
+				$product->price 		= $item['price'];
+				$product->orderID 		= $id;
+				$product->save();
 			}
 			//clear the cart
 			\Session::forget('cart');
-			return true;
-		} else {
-			//not paid
-			return false;
 		}
+	}
+
+	public function successOrder() {
+		$page = 'success';
+		$type = 'order';
+		return view('successOrder', ['page' => $page, 'type' => $type]);
 	}
 	
 }

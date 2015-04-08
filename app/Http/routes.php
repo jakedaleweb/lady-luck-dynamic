@@ -23,11 +23,14 @@ Route::get('catering/empty', 'CateringController@deleteCart');
 Route::get('catering/checkout', 'CateringController@checkout');
 Route::post('catering', 'CateringController@cartFunctions');
 Route::post('catering/checkout', 'CateringController@processCaterForm');
-
+Route::get('catering/checkout/success', 'CateringController@successOrder');
 
 Route::get('merch', 'PagesController@merch');
+Route::get('merch/{id}', 'MerchController@showItem');
+
 
 Route::get('locations', 'PagesController@locations');
+Route::get('getLocations', 'PagesController@getLocations');
 
 // Route::controllers([
 // 	'auth' => 'Auth\AuthController',
