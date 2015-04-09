@@ -28,11 +28,11 @@ var liSean = ul.appendChild(li);
 var liGemma = ul.appendChild(li2);
 
 //if mobile
-if(isMobile.any()){
-	liSean.innerHTML = "<a href='tel: +64278139613'>0278139613 - Sean</a>";
-	liGemma.innerHTML = "<a href='tel: +64274775344'>0274775344 - Gemma</a>";
-} else {
-	liSean.innerHTML = "0278139613 - Sean";
-	liGemma.innerHTML = "0274775344 - Gemma";
-}
+// if(isMobile.any()){
+// 	liSean.innerHTML = "<a href='tel: +64278139613'>0278139613 - Sean</a>";
+// 	liGemma.innerHTML = "<a href='tel: +64274775344'>0274775344 - Gemma</a>";
+// } else {
+// 	liSean.innerHTML = "0278139613 - Sean";
+// 	liGemma.innerHTML = "0274775344 - Gemma";
+// }
 

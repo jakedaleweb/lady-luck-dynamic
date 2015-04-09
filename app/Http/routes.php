@@ -32,6 +32,8 @@ Route::get('merch/{id}', 'MerchController@showItem');
 Route::get('locations', 'PagesController@locations');
 Route::get('getLocations', 'PagesController@getLocations');
 
+Route::get('contact', 'PagesController@contact');
+
 // Route::controllers([
 // 	'auth' => 'Auth\AuthController',
 // 	'password' => 'Auth\PasswordController',

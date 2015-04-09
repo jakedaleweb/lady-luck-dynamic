@@ -22,8 +22,6 @@
 @endsection
 
 @section('scripts')
-	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-	<script src="js/burger.js"></script>
 	<script src="js/instafeed.min.js"></script>
 	<script>
 	     //normally it would be a bad idea to put my token in here but it has only basic authorization

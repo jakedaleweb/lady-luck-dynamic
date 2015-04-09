@@ -13,9 +13,11 @@ class MenuController extends Controller {
 		$products = new \App\Products;
 		//get all items where type = type
 		$menu = $products::where('type', '=', $type)->get();
-		$page = 'menu';
+		$page 			= 'menu';
+		$description 	= 'menu Page of Lady Luck, see our entire range here';
+		$keywords 		= 'pies, menu, lady luck, lady, luck, food, catering, coffee, Wellington, new zealand, list, sausage roll, muffin';
 		//send to view
-		return view('menu', ['page' => $page, 'menu' => $menu]);
+		return view('menu', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'menu' => $menu]);
 	}
 
 }

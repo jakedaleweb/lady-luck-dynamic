@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocationsTable extends Migration {
+class CreateContactsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,11 @@ class CreateLocationsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('locations', function(Blueprint $table)
+		Schema::create('contact', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->timestamps();
+			$table->text('description');
+			$table->enum('contactType', ['phone', 'post', 'email']);
 		});
 	}
 
@@ -26,7 +27,7 @@ class CreateLocationsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('locations');
+		//
 	}
 
 }

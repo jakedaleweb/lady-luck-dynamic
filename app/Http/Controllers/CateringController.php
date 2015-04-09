@@ -15,7 +15,9 @@ class CateringController extends Controller {
 			$this -> updateCart();
 		}
 		//set page title
-		$page = 'catering';
+		$page 			= 'catering';
+		$description 	= 'Catering Page of Lady Luck, order food online';
+		$keywords 		= 'pies, home, lady luck, lady, luck, food, catering, coffee, Wellington, new zealand, order, cater, buy, online, cart, shop, deliver, delivery';
 		//create new instance of the products model
 		$products = new \App\Products;
 		//get all items
@@ -23,7 +25,7 @@ class CateringController extends Controller {
 		//get cart
 		$cart = \Session::get('cart');
 		//return view of page
-		return (view('catering', ['page' => $page, 'menu' => $menu, 'cart' => $cart]));
+		return (view('catering', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'menu' => $menu, 'cart' => $cart]));
 	}
 
 	//function to add an item to the cart array stored in session and show the catering page
@@ -117,7 +119,7 @@ class CateringController extends Controller {
 		//get cart
 		$cart = \Session::get('cart');
 		//return view of page
-		return (view('catering', ['page' => $page, 'menu' => $menu, 'cart' => $cart]));
+		return (view('catering', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'menu' => $menu, 'cart' => $cart]));
 		//return($cart[0]);
 	}
 
@@ -125,7 +127,9 @@ class CateringController extends Controller {
 		//get the cart
 		$cart = \Session::get('cart');
 		//set title
-		$page = 'checkout';
+		$page 			= 'checkout';
+		$description 	= 'Checkout Page of Lady Luck, order food online';
+		$keywords 		= 'pies, home, lady luck, lady, luck, food, catering, coffee, Wellington, new zealand, order, cater, buy, online, cart, shop, deliver, delivery';
 		//display page
 		//if we have come back from the payment page
 		if(isset($_GET['result']) && isset($_GET['userid'])){
@@ -138,7 +142,7 @@ class CateringController extends Controller {
 				return redirect('/catering');
 			}
 		}
-		return (view('checkout', ['page' => $page, 'cart' => $cart]));
+		return (view('checkout', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'cart' => $cart]));
 	}
 
 	public function processCaterForm(Requests\OrderCateringRequest $request){
@@ -221,9 +225,11 @@ class CateringController extends Controller {
 	}
 
 	public function successOrder() {
-		$page = 'success';
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
 		$type = 'order';
-		return view('successOrder', ['page' => $page, 'type' => $type]);
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 	
 }

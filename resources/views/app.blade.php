@@ -3,6 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<title>Lady Luck - {{ $page }}</title>
+	<meta name="description" 	content="{{$description}}">
+	<meta name="keywords" 		content="{{$keywords}}">
 	<link rel="stylesheet" href="{{ asset('/css/styles.css') }}">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic'>
@@ -53,7 +55,10 @@
 		<p>ph. 0278139613</p>
 	</footer>
 
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/burger.js"></script>
 	@yield('scripts')
+
 
 </body>
 </html>
