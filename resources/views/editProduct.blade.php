@@ -4,7 +4,7 @@
 	<div id="contentContainer">
 	<h1>Edit</h1>
 	<h3>{{$product->name}}</h3>
-		<form method="post" action="edit">
+		<form method="post">
 			<p>
 				<label for="name">name</label>
 			</p>
@@ -15,7 +15,7 @@
 				<label for="description">description</label>
 			</p>
 			<p>
-				<textarea id="description">{{$product->description}}</textarea>
+				<textarea id="description" name="description">{{$product->description}}</textarea>
 			</p>
 			<p>
 				<label for="price">price</label>
@@ -24,16 +24,16 @@
 				<input type="text" id="price" name="price" value="{{$product->price}}">
 			</p>
 			@if(isset($product->type))
-			<p>
-				<label for="type">type</label>
-			</p>
-			<p>
-				<select name="type" id="type">
-					<option {!! $product->type == 'hot' ? 'selected="selected"' : '' !!} value="hot">Hot</option>	
-					<option {!! $product->type == 'cold' ? 'selected="selected"' : '' !!} value="cold">Cold</option>	
-					<option {!! $product->type == 'drink' ? 'selected="selected"' : '' !!} value="drink">Drink</option>		
-				</select>
-			</p>
+				<p>
+					<label for="type">type</label>
+				</p>
+				<p>
+					<select name="type" id="type">
+						<option {!! $product->type == 'hot' ? 'selected="selected"' : '' !!} value="hot">Hot</option>	
+						<option {!! $product->type == 'cold' ? 'selected="selected"' : '' !!} value="cold">Cold</option>	
+						<option {!! $product->type == 'drink' ? 'selected="selected"' : '' !!} value="drink">Drink</option>		
+					</select>
+				</p>
 			@endif
 			<p>
 				<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />

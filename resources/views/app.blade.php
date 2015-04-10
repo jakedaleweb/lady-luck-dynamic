@@ -58,6 +58,7 @@
 
 		@if(Auth::check())
 			<a href="/logout">logout</a>
+			<a href="/admin">Admin</a>
 		@endif
 		<p>ph. 0278139613</p>
 	</footer>

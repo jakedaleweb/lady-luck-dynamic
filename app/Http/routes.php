@@ -11,36 +11,43 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::get('/', 						'PagesController@index');
 
-Route::get('home', 'PagesController@index');
+Route::get('home', 						'PagesController@index');
 
-Route::get('menu', 'PagesController@menu');
-Route::get('menu/{type}', 'MenuController@displayType');
-Route::get('edit/menu/{id}', 'AdminController@editMenu');
-Route::post('edit/menu/{id}', 'AdminController@editMenu');
-Route::get('delete/menu/{id}', 'AdminController@deleteMenu');
+Route::get('menu', 						'PagesController@menu');
+Route::get('menu/{type}', 				'MenuController@displayType');
+Route::get('edit/menu/{id}', 			'AdminController@editMenu');
+Route::post('edit/menu/{id}', 			'AdminController@editMenu');
+Route::get('delete/menu/{id}', 			'AdminController@deleteMenu');
+Route::get('add/menu', 					'AdminController@addMenu');
+Route::post('add/menu', 				'AdminController@addMenu');
 
-Route::get('catering', 'PagesController@catering');
-Route::get('catering/empty', 'CateringController@deleteCart');
-Route::get('catering/checkout', 'CateringController@checkout');
-Route::post('catering', 'CateringController@cartFunctions');
-Route::post('catering/checkout', 'CateringController@processCaterForm');
+Route::get('catering', 					'PagesController@catering');
+Route::get('catering/empty', 			'CateringController@deleteCart');
+Route::get('catering/checkout', 		'CateringController@checkout');
+Route::post('catering', 				'CateringController@cartFunctions');
+Route::post('catering/checkout', 		'CateringController@processCaterForm');
 Route::get('catering/checkout/success', 'CateringController@successOrder');
 
-Route::get('merch', 'PagesController@merch');
-Route::get('merch/{id}', 'MerchController@showItem');
+Route::get('merch', 					'PagesController@merch');
+Route::get('merch/{id}', 				'MerchController@showItem');
+Route::get('edit/merch/{id}', 			'AdminController@editMerch');
+Route::post('edit/merch/{id}', 			'AdminController@editMerch');
+Route::get('delete/merch/{id}', 		'AdminController@deleteMerch');
+Route::get('add/merch', 				'AdminController@addMerch');
+Route::post('add/merch', 				'AdminController@addMerch');
 
 
-Route::get('locations', 'PagesController@locations');
-Route::get('getLocations', 'PagesController@getLocations');
+Route::get('locations', 				'PagesController@locations');
+Route::get('getLocations', 				'PagesController@getLocations');
 
-Route::get('contact', 'PagesController@contact');
+Route::get('contact', 					'PagesController@contact');
 
-Route::get('adminLogin', 'PagesController@admin');
-Route::post('adminLogin', 'AdminController@verifyLogin');
-Route::get('admin', 'AdminController@show');
-Route::get('logout', 'AdminController@logout');
+Route::get('adminLogin', 				'PagesController@admin');
+Route::post('adminLogin', 				'AdminController@verifyLogin');
+Route::get('admin', 					'AdminController@show');
+Route::get('logout', 					'AdminController@logout');
 // Route::controllers([
 // 	'auth' => 'Auth\AuthController',
 // 	'password' => 'Auth\PasswordController',
