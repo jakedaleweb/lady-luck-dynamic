@@ -99,4 +99,15 @@ class PagesController extends Controller {
 		return view('contact', ['page' => $page, 'description' => $description, 'keywords' => $keywords,  'phone' => $phone, 'post' => $post, 'email' => $email]);
 	}
 
+	public function admin(){
+		$page 			= 'Admin login';
+		$description 	= 'What are you ding here? shoo.';
+		$keywords 		= 'nothing, to, see, here';
+		if(\Auth::check()){
+			return redirect('admin');
+		} else {
+			return view('auth.login', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
+		}
+	}
+
 }

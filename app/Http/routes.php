@@ -17,6 +17,9 @@ Route::get('home', 'PagesController@index');
 
 Route::get('menu', 'PagesController@menu');
 Route::get('menu/{type}', 'MenuController@displayType');
+Route::get('edit/menu/{id}', 'AdminController@editMenu');
+Route::post('edit/menu/{id}', 'AdminController@editMenu');
+Route::get('delete/menu/{id}', 'AdminController@deleteMenu');
 
 Route::get('catering', 'PagesController@catering');
 Route::get('catering/empty', 'CateringController@deleteCart');
@@ -34,6 +37,10 @@ Route::get('getLocations', 'PagesController@getLocations');
 
 Route::get('contact', 'PagesController@contact');
 
+Route::get('adminLogin', 'PagesController@admin');
+Route::post('adminLogin', 'AdminController@verifyLogin');
+Route::get('admin', 'AdminController@show');
+Route::get('logout', 'AdminController@logout');
 // Route::controllers([
 // 	'auth' => 'Auth\AuthController',
 // 	'password' => 'Auth\PasswordController',

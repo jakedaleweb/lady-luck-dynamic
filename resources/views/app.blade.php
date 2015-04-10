@@ -16,7 +16,7 @@
 			<i class="fa fa-bars"></i>
 		</div>
 
-		<img src="{{ asset('img/logo.png') }}" alt="Illustrated Lady Luck Logo">
+		<a href="/home"><img src="{{ asset('img/logo.png') }}" alt="Illustrated Lady Luck Logo"></a>
 		<div id="mobile-list" class="hidden"> 
 			<ul>
 				<li><a href="/home">home</a></li>
@@ -52,6 +52,13 @@
 		<a href="https://www.facebook.com/LadyLuckCaravanCafe"><i class="fa fa-facebook-square"></i></a>
 		<a href="https://instagram.com/ladyluckcaravan/"><i class="fa fa-instagram"></i></a>
 		<p>&copy;Lady Luck/Jake Ovenden {!!date('Y')!!}</p>
+		@unless(Auth::check())
+			<a href="/adminLogin">*</a>
+		@endunless
+
+		@if(Auth::check())
+			<a href="/logout">logout</a>
+		@endif
 		<p>ph. 0278139613</p>
 	</footer>
 
