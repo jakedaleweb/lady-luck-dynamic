@@ -8,6 +8,10 @@
 			<ul id="phone">
 				@foreach($phone as $number)
 					<li>{{$number->description}}</li>
+					@if(Auth::check()) 
+						<a href="/edit/contact/{{$number->id}}">edit |</a>
+						<a href="/delete/contact/{{$number->id}}">| delete</a>
+					@endif
 				@endforeach
 			</ul>
 		</div>
@@ -18,6 +22,10 @@
 			<ul>
 				@foreach($post as $address)
 					<li>{{$address->description}}</li>
+					@if(Auth::check()) 
+						<a href="/edit/contact/{{$address->id}}">edit |</a>
+						<a href="/delete/contact/{{$address->id}}">| delete</a>
+					@endif
 				@endforeach
 			</ul>
 		</div>
@@ -28,6 +36,10 @@
 			<ul>
 				@foreach($email as $emailAddress)
 					<li>{{$emailAddress->description}}</li>
+					@if(Auth::check()) 
+						<a href="/edit/contact/{{$emailAddress->id}}">edit |</a>
+						<a href="/delete/contact/{{$emailAddress->id}}">| delete</a>
+					@endif
 				@endforeach
 			</ul>
 		</div>

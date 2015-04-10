@@ -124,9 +124,7 @@ footer {
   float: left;
   width: 49%; }
   .blurb a {
-    color: #f6e0bb;
-    padding: 0.1em 0.2em;
-    background-color: #ce5a3e;
+    color: #ce5a3e;
     text-decoration: none; }
   .blurb a:hover {
     color: #1b75ba; }

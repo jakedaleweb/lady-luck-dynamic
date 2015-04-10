@@ -41,8 +41,18 @@ Route::post('add/merch', 				'AdminController@addMerch');
 
 Route::get('locations', 				'PagesController@locations');
 Route::get('getLocations', 				'PagesController@getLocations');
+Route::get('edit/location/{id}', 		'AdminController@editLocation');
+Route::post('edit/location/{id}', 		'AdminController@editLocation');
+Route::get('delete/location/{id}', 		'AdminController@deleteLocation');
+Route::get('add/location', 				'AdminController@addLocation');
+Route::post('add/location', 			'AdminController@addLocation');
 
 Route::get('contact', 					'PagesController@contact');
+Route::get('edit/contact/{id}', 		'AdminController@editContact');
+Route::post('edit/contact/{id}', 		'AdminController@editContact');
+Route::get('delete/contact/{id}', 		'AdminController@deleteContact');
+Route::get('add/contact', 				'AdminController@addContact');
+Route::post('add/contact', 				'AdminController@addContact');
 
 Route::get('adminLogin', 				'PagesController@admin');
 Route::post('adminLogin', 				'AdminController@verifyLogin');

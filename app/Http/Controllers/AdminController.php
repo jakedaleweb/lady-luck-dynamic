@@ -47,7 +47,7 @@ class AdminController extends Controller {
 			$page 			= 'success';
 			$description 	= 'Success';
 			$keywords 		= 'success, yay, go you';
-			$type = 'delete';
+			$type 			= 'delete';
 			return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 			//show delete yes/no options
 			} else {
@@ -74,7 +74,7 @@ class AdminController extends Controller {
 				$page 			= 'success';
 				$description 	= 'Success';
 				$keywords 		= 'success, yay, go you';
-				$type = 'edit';
+				$type			= 'edit';
 				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 			} else {
 				$menu = new \App\Products;
@@ -100,7 +100,7 @@ class AdminController extends Controller {
 				$page 			= 'success';
 				$description 	= 'Success';
 				$keywords 		= 'success, yay, go you';
-				$type = 'add';
+				$type 			= 'add';
 				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 			} else {
 				$page 			= 'add';
@@ -115,8 +115,7 @@ class AdminController extends Controller {
 
 	//--------------------------------------endmenustuff---------------------------------------------//
 
-	//--------------------------------------merchstuff------------------------------------------------//
-
+	//--------------------------------------merchstuff-----------------------------------------------//
 	public function deleteMerch($id){
 		//if delete has been selected in the get
 		if(\Auth::check()){
@@ -128,7 +127,7 @@ class AdminController extends Controller {
 			$page 			= 'success';
 			$description 	= 'Success';
 			$keywords 		= 'success, yay, go you';
-			$type = 'delete';
+			$type 			= 'delete';
 			return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 			//show delete yes/no options
 			} else {
@@ -155,7 +154,7 @@ class AdminController extends Controller {
 				$page 			= 'success';
 				$description 	= 'Success';
 				$keywords 		= 'success, yay, go you';
-				$type = 'edit';
+				$type 			= 'edit';
 				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 			} else {
 				$merch 	 = new \App\Merch;
@@ -181,7 +180,7 @@ class AdminController extends Controller {
 				$page 			= 'success';
 				$description 	= 'Success';
 				$keywords 		= 'success, yay, go you';
-				$type = 'add';
+				$type 			= 'add';
 				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 			} else {
 				$page 			= 'add';
@@ -193,8 +192,165 @@ class AdminController extends Controller {
 			return redirect('home');
 		}
 	}
+	//--------------------------------------endmerchstuff--------------------------------------------//
 
-	//--------------------------------------endmerchstuff---------------------------------------------//
+	//--------------------------------------locationstuff--------------------------------------------//
+	public function deleteLocation($id){
+		//if delete has been selected in the get
+		if(\Auth::check()){
+			if( isset($_GET['deleteProduct']) && $_GET['deleteProduct'] == 'true'){
+			//delete product
+			$locations = new \App\Locations;
+			$locations->where('id', '=', $id)->delete();
+			//show success page
+			$page 			= 'success';
+			$description 	= 'Success';
+			$keywords 		= 'success, yay, go you';
+			$type 			= 'delete';
+			return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+			//show delete yes/no options
+			} else {
+				$locations 		= new \App\Locations;
+				$location 		= $locations::where('id', '=', $id)->get()->first();
+				$page 			= 'delete';
+				$description 	= 'delete';
+				$keywords 		= 'delete, location, u, sure?';
+				return view('deleteLocation', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'location' => $location]);
+			}
+		} else {
+			redirect('home');
+		}
+		
+	}
+
+	public function editLocation($id){
+		if(\Auth::check()){
+			//if form has been submitted
+			if(isset($_POST['edit'])){
+				//run edit function
+				$this->edit('location', $id);
+				//return success view
+				$page 			= 'success';
+				$description 	= 'Success';
+				$keywords 		= 'success, yay, go you';
+				$type 			= 'edit';
+				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+			} else {
+				$locations 	 = new \App\Locations;
+				$location 	 = $locations::where('id', '=', $id)->get()->first();
+				//show view with edit form and send it the item
+				$page 			= 'edit';
+				$description 	= 'Edit a product';
+				$keywords 		= 'edit, products';
+				return view('editLocation', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'location' => $location]);
+			}
+		} else {
+			return redirect('home');
+		}
+	}
+
+	public function addLocation() {
+		if(\Auth::check()){
+			//if form has been submitted
+			if(isset($_POST['add'])){
+				//run add function
+				$this->isUploaded('location');
+				//return success view
+				$page 			= 'success';
+				$description 	= 'Success';
+				$keywords 		= 'success, yay, go you';
+				$type 			= 'add';
+				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+			} else {
+				$page 			= 'add';
+				$description 	= 'add a product';
+				$keywords 		= 'add, products';
+				return view('addLocation', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
+			}
+		} else {
+			return redirect('home');
+		}
+	}
+	//--------------------------------------endlocationstuff-----------------------------------------//
+
+	//--------------------------------------contactstuff--------------------------------------------//
+	public function deleteContact($id){
+		//if delete has been selected in the get
+		if(\Auth::check()){
+			if( isset($_GET['deleteProduct']) && $_GET['deleteProduct'] == 'true'){
+			//delete product
+			$contact = new \App\Contact;
+			$contact->where('id', '=', $id)->delete();
+			//show success page
+			$page 			= 'success';
+			$description 	= 'Success';
+			$keywords 		= 'success, yay, go you';
+			$type 			= 'delete';
+			return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+			//show delete yes/no options
+			} else {
+				$contact 		= new \App\Contact;
+				$contact 		= $contact::where('id', '=', $id)->get()->first();
+				$page 			= 'delete';
+				$description 	= 'delete';
+				$keywords 		= 'delete, contact, u, sure?';
+				return view('deleteContact', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'contact' => $contact]);
+			}
+		} else {
+			redirect('home');
+		}
+		
+	}
+
+	public function editContact($id){
+		if(\Auth::check()){
+			//if form has been submitted
+			if(isset($_POST['edit'])){
+				//run edit function
+				$this->edit('contact', $id);
+				//return success view
+				$page 			= 'success';
+				$description 	= 'Success';
+				$keywords 		= 'success, yay, go you';
+				$type 			= 'edit';
+				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+			} else {
+				$contacts 	 = new \App\Contact;
+				$contact 	 = $contacts::where('id', '=', $id)->get()->first();
+				//show view with edit form and send it the item
+				$page 			= 'edit';
+				$description 	= 'Edit contact info';
+				$keywords 		= 'edit, contact';
+				return view('editContact', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'contact' => $contact]);
+			}
+		} else {
+			return redirect('home');
+		}
+	}
+
+	public function addContact() {
+		if(\Auth::check()){
+			//if form has been submitted
+			if(isset($_POST['add'])){
+				//run add function
+				$this->add('contact');
+				//return success view
+				$page 			= 'success';
+				$description 	= 'Success';
+				$keywords 		= 'success, yay, go you';
+				$type 			= 'add';
+				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+			} else {
+				$page 			= 'add';
+				$description 	= 'add contact info';
+				$keywords 		= 'add, contact';
+				return view('addContact', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
+			}
+		} else {
+			return redirect('home');
+		}
+	}
+	//--------------------------------------endcontactstuff-----------------------------------------//
 
 	public function edit($type, $id){
 		if($type == 'menu'){
@@ -206,9 +362,19 @@ class AdminController extends Controller {
 				'type'			=> \Input::get('type')
 			]);
 		} else if($type == 'location'){
-
+			$location = new \App\Locations;
+			$location::where('id', $id)->update([
+				'name'			=> \Input::get('name'), 
+				'description' 	=> \Input::get('description'),
+				'lat' 			=> \Input::get('lat'),
+				'lng' 			=> \Input::get('lng')
+			]);
 		} else if($type == 'contact'){
-
+			$contact = new \App\Contact;
+			$contact::where('id', $id)->update([
+				'description' 	=> \Input::get('description'),
+				'contactType' 	=> \Input::get('type')
+			]);
 		} else if($type == 'merch'){
 			$merch = new \App\Merch;
 			$merch::where('id', $id)->update([
@@ -230,9 +396,20 @@ class AdminController extends Controller {
 				'img'			=> $filepath
 			]);
 		} else if($type == 'location'){
-
+			$location = new \App\Locations;
+			$location::insert([
+				'name'			=> \Input::get('name'), 
+				'description' 	=> \Input::get('description'),
+				'lat' 			=> \Input::get('lat'),
+				'lng' 			=> \Input::get('lng'),
+				'img'			=> $filepath
+			]);
 		} else if($type == 'contact'){
-
+			$contact = new \App\Contact;
+			$contact::insert([ 
+				'description' 	=> \Input::get('description'),
+				'contactType' 	=> \Input::get('type'),
+			]);
 		} else if($type == 'merch'){
 			$product = new \App\Merch;
 			$product::insert([
