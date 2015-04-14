@@ -8,6 +8,7 @@ class PagesController extends Controller {
 		$description 	= 'Home Page of Lady Luck, delicious pies and great service in Wellington';
 		$keywords 		= 'pies, home, lady luck, lady, luck, food, catering, coffee, Wellington, new zealand';
 		$page 			= 'home';
+		//return view of page
 		return view('home', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
 	}
 
@@ -99,13 +100,16 @@ class PagesController extends Controller {
 		return view('contact', ['page' => $page, 'description' => $description, 'keywords' => $keywords,  'phone' => $phone, 'post' => $post, 'email' => $email]);
 	}
 
+	//function to login in to admin/go to admin page
 	public function admin(){
 		$page 			= 'Admin login';
 		$description 	= 'What are you ding here? shoo.';
 		$keywords 		= 'nothing, to, see, here';
 		if(\Auth::check()){
+			//return view of page
 			return redirect('admin');
 		} else {
+			//return view of page
 			return view('auth.login', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
 		}
 	}

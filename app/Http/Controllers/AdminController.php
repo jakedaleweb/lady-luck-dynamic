@@ -11,9 +11,12 @@ class AdminController extends Controller {
 
 	//check login
 	public function verifyLogin() {	
+		//if login works
 		if (\Auth::attempt(['name' => \Input::get('name'), 'password' => \Input::get('password')], true)){
+			//return view of page
             return redirect('admin');
         } else {
+        	//redirect to login
         	return redirect('adminLogin');
         }
 	}
@@ -25,16 +28,23 @@ class AdminController extends Controller {
 		    $page 			= 'Admin';
 			$description 	= 'What are you ding here? shoo.';
 			$keywords 		= 'nothing, to, see, here';
+			//return view of page
 	       	return view('admin', ['page' => $page, 'keywords' => $keywords, 'description' => $description]);
+		} else {
+			//redirect to home
+			return redirect('home');
 		}
 	}
 
+	//function to logout admin
 	public function logout() {
 		//logout out user
 		\Auth::logout();
 		//redirect to home
 		return redirect('home');
 	}
+
+	//--------------------------------------enduserstuff---------------------------------------------//
 
 	//displays the orders page
 	public function orders(){
@@ -46,12 +56,15 @@ class AdminController extends Controller {
 			$page 			= 'Orders';
 			$description 	= 'What are you ding here? shoo.';
 			$keywords 		= 'nothing, to, see, here';
+			//return view of orders page
 			return view('orders', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'orders' => $allOrders]);
 		} else {
+			//redirect to home page
 			return redirect('home');
 		}
 	}
 
+	//function to show individual order page
 	public function order($id){
 		//check admin
 		if(\Auth::check()){
@@ -60,30 +73,37 @@ class AdminController extends Controller {
 			$order  		= $orders::where('id', '=', $id)->get()->first(); 
 			$orderedProduct = new \App\orderedProducts;
 			$products 		= $orderedProduct::where('orderID', '=', $order->id)->get(); 
-			//lopop through each product and get the name
+			//create instance of products model
 			$menu = new \App\Products;
+			//set up total var
 			$grandTotal = 0;
+			//loop through each product and get the name
 			foreach($products as $product){
+				//get name of current product
 				$name = $menu::where('id', '=', $product->productID)->pluck('name');
+				//set name in the products object
 				$product->name = $name;
+				//add price to grandtotal
 				$grandTotal += $product->quantity * $product->price;
 			}
 			$page 			= 'Orders';
 			$description 	= 'What are you ding here? shoo.';
 			$keywords 		= 'nothing, to, see, here';
+			//return view of order page
 			return view('order', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'order' => $order, 'products' => $products, 'total' => $grandTotal]);
 		} else {
+			//redirect to home
 			return redirect('home');
 		}
 	}
 
-	//--------------------------------------enduserstuff---------------------------------------------//
-
 	//--------------------------------------menustuff------------------------------------------------//
 
+	//function to remove an item from the products table
 	public function deleteMenu($id){
-		//if delete has been selected in the get
+		//check admin
 		if(\Auth::check()){
+			//if delete has been selected in the get
 			if( isset($_GET['deleteProduct']) && $_GET['deleteProduct'] == 'true'){
 			//delete product
 			$menu = new \App\Products;
@@ -93,21 +113,24 @@ class AdminController extends Controller {
 			$description 	= 'Success';
 			$keywords 		= 'success, yay, go you';
 			$type 			= 'delete';
+			//return success view
 			return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			//show delete yes/no options
 			} else {
 				$menu = new \App\Products;
 				$product = $menu::where('id', '=', $id)->get()->first();
 				$page 			= 'delete';
 				$description 	= 'delete';
 				$keywords 		= 'delete, product, u, sure?';
+				//return delete view
 				return view('deleteProduct', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'product' => $product]);
 			}
 		} else {
+			//redirect to home
 			redirect('home');
 		}	
 	}
 
+	//function to show the edit menu page
 	public function showEditMenu($id){
 		//check admin
 		if(\Auth::check()){
@@ -123,6 +146,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to edit a menu item
 	public function editMenu(Requests\EditMenuRequest $request, $id) {
 		//run edit function
 		$this->isUploaded('menu', 'edit', $id);
@@ -134,6 +158,7 @@ class AdminController extends Controller {
 		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 
+	//function to show the add menu page
 	public function showAddMenu() {
 		if(\Auth::check()){
 			$page 			= 'add';
@@ -145,6 +170,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to add menu item
 	public function addMenu(Requests\EditMenuRequest $request) {
 		//run add function
 		$this->isUploaded('menu', 'add');
@@ -159,6 +185,8 @@ class AdminController extends Controller {
 	//--------------------------------------endmenustuff---------------------------------------------//
 
 	//--------------------------------------merchstuff-----------------------------------------------//
+
+	//function to remove an item from the merch table
 	public function deleteMerch($id){
 		//if delete has been selected in the get
 		if(\Auth::check()){
@@ -187,6 +215,7 @@ class AdminController extends Controller {
 		
 	}
 
+	//function to show the edit merch page
 	public function showEditMerch($id){
 		if(\Auth::check()){
 			//if form has been submitted
@@ -202,6 +231,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to edit a merch item
 	public function editMerch(Requests\EditMerchRequest $request, $id){
 		//run edit function
 		$this->isUploaded('merch', 'edit', $id);
@@ -213,6 +243,7 @@ class AdminController extends Controller {
 		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 
+	//function to show the add merch page
 	public function showAddMerch() {
 		if(\Auth::check()){
 			$page 			= 'add';
@@ -224,6 +255,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to add merch item
 	public function addMerch(Requests\EditMerchRequest $request){
 		//run add function
 		$this->isUploaded('merch', 'add');
@@ -237,6 +269,8 @@ class AdminController extends Controller {
 	//--------------------------------------endmerchstuff--------------------------------------------//
 
 	//--------------------------------------locationstuff--------------------------------------------//
+
+	//function to remove an item from the locations table
 	public function deleteLocation($id){
 		//if delete has been selected in the get
 		if(\Auth::check()){
@@ -265,6 +299,7 @@ class AdminController extends Controller {
 		
 	}
 
+	//function to show the edit location page
 	public function showEditLocation($id){
 		if(\Auth::check()){
 			$locations 	 = new \App\Locations;
@@ -279,6 +314,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to edit a location
 	public function editLocation(Requests\EditLocationRequest $request, $id){
 		$this->isUploaded('location', 'edit', $id);
 		//return success view
@@ -289,6 +325,7 @@ class AdminController extends Controller {
 		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 
+	//function to show the add location page
 	public function showAddLocation() {
 		if(\Auth::check()){
 			$page 			= 'add';
@@ -300,6 +337,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to add location
 	public function addLocation(Requests\EditLocationRequest $request){
 		$this->isUploaded('location', 'add');
 		//return success view
@@ -312,6 +350,8 @@ class AdminController extends Controller {
 	//--------------------------------------endlocationstuff-----------------------------------------//
 
 	//--------------------------------------contactstuff--------------------------------------------//
+
+	//function to remove an item from the contacts table
 	public function deleteContact($id){
 		//if delete has been selected in the get
 		if(\Auth::check()){
@@ -340,6 +380,7 @@ class AdminController extends Controller {
 		
 	}
 
+	//function to show the edit contact page
 	public function showEditContact($id){
 		if(\Auth::check()){
 			$contacts 	 = new \App\Contact;
@@ -354,6 +395,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to edit contact info
 	public function editContact(Requests\EditContactRequest $request, $id) {
 		$this->edit('contact', '', $id);
 		//return success view
@@ -364,6 +406,7 @@ class AdminController extends Controller {
 		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 
+	//function to show the add contact page
 	public function showAddContact() {
 		if(\Auth::check()){
 			$page 			= 'add';
@@ -375,6 +418,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to add contact info
 	public function addContact(Requests\EditContactRequest $request){
 		//run add function
 		$this->add('contact');
@@ -387,6 +431,7 @@ class AdminController extends Controller {
 	}
 	//--------------------------------------endcontactstuff-----------------------------------------//
 
+	//edits an item in the db
 	public function edit($type, $filepath='', $id){
 		if($type == 'menu'){
 			$product = new \App\Products;
@@ -424,6 +469,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//adds item to db
 	public function add($type, $filepath=''){
 		if($type == 'menu'){
 			$product = new \App\Products;
@@ -460,6 +506,7 @@ class AdminController extends Controller {
 		}
 	}
 
+	//function to add upload image, redirects to either add() or edit()s
 	public function isUploaded($type, $addEdit, $id=''){
 		//check if the file reached its temporary location
 		$uploaded = is_uploaded_file($_FILES['image']['tmp_name']);

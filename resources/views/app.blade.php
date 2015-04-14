@@ -5,10 +5,10 @@
 	<title>Lady Luck - {{ $page }}</title>
 	<meta name="description" 	content="{{$description}}">
 	<meta name="keywords" 		content="{{$keywords}}">
-	<link rel="stylesheet" href="{{ asset('/css/styles.css') }}">
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic'>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" 		href="{{ asset('/css/styles.css') }}">
+	<link rel="stylesheet" 		href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" 		href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic'>
+	<meta name="viewport" 		content="width=device-width, initial-scale=1">
 </head>
 <body class="cf">
 	<header>
