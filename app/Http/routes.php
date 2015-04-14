@@ -17,10 +17,10 @@ Route::get('home', 						'PagesController@index');
 
 Route::get('menu', 						'PagesController@menu');
 Route::get('menu/{type}', 				'MenuController@displayType');
-Route::get('edit/menu/{id}', 			'AdminController@editMenu');
+Route::get('edit/menu/{id}', 			'AdminController@showEditMenu');
 Route::post('edit/menu/{id}', 			'AdminController@editMenu');
 Route::get('delete/menu/{id}', 			'AdminController@deleteMenu');
-Route::get('add/menu', 					'AdminController@addMenu');
+Route::get('add/menu', 					'AdminController@showAddMenu');
 Route::post('add/menu', 				'AdminController@addMenu');
 
 Route::get('catering', 					'PagesController@catering');
@@ -32,27 +32,30 @@ Route::get('catering/checkout/success', 'CateringController@successOrder');
 
 Route::get('merch', 					'PagesController@merch');
 Route::get('merch/{id}', 				'MerchController@showItem');
-Route::get('edit/merch/{id}', 			'AdminController@editMerch');
+Route::get('edit/merch/{id}', 			'AdminController@showEditMerch');
 Route::post('edit/merch/{id}', 			'AdminController@editMerch');
 Route::get('delete/merch/{id}', 		'AdminController@deleteMerch');
-Route::get('add/merch', 				'AdminController@addMerch');
+Route::get('add/merch', 				'AdminController@showAddMerch');
 Route::post('add/merch', 				'AdminController@addMerch');
 
 
 Route::get('locations', 				'PagesController@locations');
 Route::get('getLocations', 				'PagesController@getLocations');
-Route::get('edit/location/{id}', 		'AdminController@editLocation');
+Route::get('edit/location/{id}', 		'AdminController@showEditLocation');
 Route::post('edit/location/{id}', 		'AdminController@editLocation');
 Route::get('delete/location/{id}', 		'AdminController@deleteLocation');
-Route::get('add/location', 				'AdminController@addLocation');
+Route::get('add/location', 				'AdminController@showAddLocation');
 Route::post('add/location', 			'AdminController@addLocation');
 
 Route::get('contact', 					'PagesController@contact');
-Route::get('edit/contact/{id}', 		'AdminController@editContact');
+Route::get('edit/contact/{id}', 		'AdminController@showEditContact');
 Route::post('edit/contact/{id}', 		'AdminController@editContact');
 Route::get('delete/contact/{id}', 		'AdminController@deleteContact');
-Route::get('add/contact', 				'AdminController@addContact');
+Route::get('add/contact', 				'AdminController@showAddContact');
 Route::post('add/contact', 				'AdminController@addContact');
+
+Route::get('orders', 					'AdminController@orders');
+Route::get('orders/{id}', 				'AdminController@order');
 
 Route::get('adminLogin', 				'PagesController@admin');
 Route::post('adminLogin', 				'AdminController@verifyLogin');

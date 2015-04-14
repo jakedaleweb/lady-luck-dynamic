@@ -6,12 +6,14 @@
 		<form method="post">
 			<p>
 				<label for="description">Information</label>
+				{!!$errors->first('description', '<span>:message</span>')!!}
 			</p>
 			<p>
 				<textarea id="description" name="description">{{\Input::old('description')}}</textarea>
 			</p>
 			<p>
 				<label for="type">type</label>
+				{!!$errors->first('type', '<span>:message</span>')!!}
 			</p>
 			<p>
 				<select name="type" id="type">

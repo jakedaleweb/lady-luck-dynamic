@@ -2,9 +2,9 @@
 
 @section('content')
 	<div id="linkContainer">
-		<a class="menuSelect"href="/menu/hot">Hot</a>
-		<a class="menuSelect"href="/menu/cold">Cold</a>
-		<a class="menuSelect"href="/menu/drink">Drinks</a>
+		<a class="menuSelect" href="/menu/hot">Hot</a>
+		<a class="menuSelect" href="/menu/cold">Cold</a>
+		<a class="menuSelect" href="/menu/drink">Drinks</a>
 	</div>
 
 	<div id="contentContainer" class="cf">

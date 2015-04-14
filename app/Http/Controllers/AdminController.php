@@ -9,6 +9,7 @@ class AdminController extends Controller {
 	//--------------------------------------userstuff------------------------------------------------//
 
 
+	//check login
 	public function verifyLogin() {	
 		if (\Auth::attempt(['name' => \Input::get('name'), 'password' => \Input::get('password')], true)){
             return redirect('admin');
@@ -17,7 +18,9 @@ class AdminController extends Controller {
         }
 	}
 
+	//show admin page
 	public function show(){
+		//check admin
 		if (\Auth::check()){
 		    $page 			= 'Admin';
 			$description 	= 'What are you ding here? shoo.';
@@ -29,7 +32,49 @@ class AdminController extends Controller {
 	public function logout() {
 		//logout out user
 		\Auth::logout();
+		//redirect to home
 		return redirect('home');
+	}
+
+	//displays the orders page
+	public function orders(){
+		//check admin
+		if(\Auth::check()){
+			//get order stuff
+			$orders 		= new \App\Orders;
+			$allOrders  	= $orders::where('status', '=', 'paid')->get();; 
+			$page 			= 'Orders';
+			$description 	= 'What are you ding here? shoo.';
+			$keywords 		= 'nothing, to, see, here';
+			return view('orders', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'orders' => $allOrders]);
+		} else {
+			return redirect('home');
+		}
+	}
+
+	public function order($id){
+		//check admin
+		if(\Auth::check()){
+			//get order stuff
+			$orders 		= new \App\Orders;
+			$order  		= $orders::where('id', '=', $id)->get()->first(); 
+			$orderedProduct = new \App\orderedProducts;
+			$products 		= $orderedProduct::where('orderID', '=', $order->id)->get(); 
+			//lopop through each product and get the name
+			$menu = new \App\Products;
+			$grandTotal = 0;
+			foreach($products as $product){
+				$name = $menu::where('id', '=', $product->productID)->pluck('name');
+				$product->name = $name;
+				$grandTotal += $product->quantity * $product->price;
+			}
+			$page 			= 'Orders';
+			$description 	= 'What are you ding here? shoo.';
+			$keywords 		= 'nothing, to, see, here';
+			return view('order', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'order' => $order, 'products' => $products, 'total' => $grandTotal]);
+		} else {
+			return redirect('home');
+		}
 	}
 
 	//--------------------------------------enduserstuff---------------------------------------------//
@@ -60,57 +105,55 @@ class AdminController extends Controller {
 			}
 		} else {
 			redirect('home');
-		}
-		
+		}	
 	}
 
-	public function editMenu($id){
+	public function showEditMenu($id){
+		//check admin
 		if(\Auth::check()){
-			//if form has been submitted
-			if(isset($_POST['edit'])){
-				//run edit function
-				$this->edit('menu', $id);
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type			= 'edit';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$menu = new \App\Products;
-				$product = $menu::where('id', '=', $id)->get()->first();
-				//show view with edit form and send it the item
-				$page 			= 'edit';
-				$description 	= 'Edit a product';
-				$keywords 		= 'edit, products';
-				return view('editProduct', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'product' => $product]);
-			}
+			$menu = new \App\Products;
+			$product = $menu::where('id', '=', $id)->get()->first();
+			//show view with edit form and send it the item
+			$page 			= 'edit';
+			$description 	= 'Edit a product';
+			$keywords 		= 'edit, products';
+			return view('editProduct', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'product' => $product]);
 		} else {
 			return redirect('home');
 		}
 	}
 
-	public function addMenu() {
+	public function editMenu(Requests\EditMenuRequest $request, $id) {
+		//run edit function
+		$this->isUploaded('menu', 'edit', $id);
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type			= 'edit';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+	}
+
+	public function showAddMenu() {
 		if(\Auth::check()){
-			//if form has been submitted
-			if(isset($_POST['add'])){
-				//run add function
-				$this->isUploaded('menu');
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type 			= 'add';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$page 			= 'add';
-				$description 	= 'add a product';
-				$keywords 		= 'add, products';
-				return view('addProduct', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
-			}
+			$page 			= 'add';
+			$description 	= 'add a product';
+			$keywords 		= 'add, products';
+			return view('addProduct', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
 		} else {
 			return redirect('home');
 		}
+	}
+
+	public function addMenu(Requests\EditMenuRequest $request) {
+		//run add function
+		$this->isUploaded('menu', 'add');
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type 			= 'add';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 
 	//--------------------------------------endmenustuff---------------------------------------------//
@@ -144,53 +187,52 @@ class AdminController extends Controller {
 		
 	}
 
-	public function editMerch($id){
+	public function showEditMerch($id){
 		if(\Auth::check()){
 			//if form has been submitted
-			if(isset($_POST['edit'])){
-				//run edit function
-				$this->edit('merch', $id);
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type 			= 'edit';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$merch 	 = new \App\Merch;
-				$product = $merch::where('id', '=', $id)->get()->first();
-				//show view with edit form and send it the item
-				$page 			= 'edit';
-				$description 	= 'Edit a product';
-				$keywords 		= 'edit, products';
-				return view('editProduct', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'product' => $product]);
-			}
+			$merch 	 = new \App\Merch;
+			$product = $merch::where('id', '=', $id)->get()->first();
+			//show view with edit form and send it the item
+			$page 			= 'edit';
+			$description 	= 'Edit a product';
+			$keywords 		= 'edit, products';
+			return view('editProduct', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'product' => $product]);
 		} else {
 			return redirect('home');
 		}
 	}
 
-	public function addMerch() {
+	public function editMerch(Requests\EditMerchRequest $request, $id){
+		//run edit function
+		$this->isUploaded('merch', 'edit', $id);
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type 			= 'edit';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+	}
+
+	public function showAddMerch() {
 		if(\Auth::check()){
-			//if form has been submitted
-			if(isset($_POST['add'])){
-				//run add function
-				$this->isUploaded('merch');
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type 			= 'add';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$page 			= 'add';
-				$description 	= 'add a product';
-				$keywords 		= 'add, products';
-				return view('addMerch', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
-			}
+			$page 			= 'add';
+			$description 	= 'add a product';
+			$keywords 		= 'add, products';
+			return view('addMerch', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
 		} else {
 			return redirect('home');
 		}
+	}
+
+	public function addMerch(Requests\EditMerchRequest $request){
+		//run add function
+		$this->isUploaded('merch', 'add');
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type 			= 'add';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 	//--------------------------------------endmerchstuff--------------------------------------------//
 
@@ -223,53 +265,49 @@ class AdminController extends Controller {
 		
 	}
 
-	public function editLocation($id){
+	public function showEditLocation($id){
 		if(\Auth::check()){
-			//if form has been submitted
-			if(isset($_POST['edit'])){
-				//run edit function
-				$this->edit('location', $id);
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type 			= 'edit';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$locations 	 = new \App\Locations;
-				$location 	 = $locations::where('id', '=', $id)->get()->first();
-				//show view with edit form and send it the item
-				$page 			= 'edit';
-				$description 	= 'Edit a product';
-				$keywords 		= 'edit, products';
-				return view('editLocation', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'location' => $location]);
-			}
+			$locations 	 = new \App\Locations;
+			$location 	 = $locations::where('id', '=', $id)->get()->first();
+			//show view with edit form and send it the item
+			$page 			= 'edit';
+			$description 	= 'Edit a product';
+			$keywords 		= 'edit, products';
+			return view('editLocation', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'location' => $location]);
 		} else {
 			return redirect('home');
 		}
 	}
 
-	public function addLocation() {
+	public function editLocation(Requests\EditLocationRequest $request, $id){
+		$this->isUploaded('location', 'edit', $id);
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type 			= 'edit';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+	}
+
+	public function showAddLocation() {
 		if(\Auth::check()){
-			//if form has been submitted
-			if(isset($_POST['add'])){
-				//run add function
-				$this->isUploaded('location');
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type 			= 'add';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$page 			= 'add';
-				$description 	= 'add a product';
-				$keywords 		= 'add, products';
-				return view('addLocation', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
-			}
+			$page 			= 'add';
+			$description 	= 'add a product';
+			$keywords 		= 'add, products';
+			return view('addLocation', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
 		} else {
 			return redirect('home');
 		}
+	}
+
+	public function addLocation(Requests\EditLocationRequest $request){
+		$this->isUploaded('location', 'add');
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type 			= 'add';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 	//--------------------------------------endlocationstuff-----------------------------------------//
 
@@ -302,64 +340,63 @@ class AdminController extends Controller {
 		
 	}
 
-	public function editContact($id){
+	public function showEditContact($id){
 		if(\Auth::check()){
-			//if form has been submitted
-			if(isset($_POST['edit'])){
-				//run edit function
-				$this->edit('contact', $id);
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type 			= 'edit';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$contacts 	 = new \App\Contact;
-				$contact 	 = $contacts::where('id', '=', $id)->get()->first();
-				//show view with edit form and send it the item
-				$page 			= 'edit';
-				$description 	= 'Edit contact info';
-				$keywords 		= 'edit, contact';
-				return view('editContact', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'contact' => $contact]);
-			}
+			$contacts 	 = new \App\Contact;
+			$contact 	 = $contacts::where('id', '=', $id)->get()->first();
+			//show view with edit form and send it the item
+			$page 			= 'edit';
+			$description 	= 'Edit contact info';
+			$keywords 		= 'edit, contact';
+			return view('editContact', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'contact' => $contact]);
 		} else {
 			return redirect('home');
 		}
 	}
 
-	public function addContact() {
+	public function editContact(Requests\EditContactRequest $request, $id) {
+		$this->edit('contact', '', $id);
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type 			= 'edit';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+	}
+
+	public function showAddContact() {
 		if(\Auth::check()){
-			//if form has been submitted
-			if(isset($_POST['add'])){
-				//run add function
-				$this->add('contact');
-				//return success view
-				$page 			= 'success';
-				$description 	= 'Success';
-				$keywords 		= 'success, yay, go you';
-				$type 			= 'add';
-				return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
-			} else {
-				$page 			= 'add';
-				$description 	= 'add contact info';
-				$keywords 		= 'add, contact';
-				return view('addContact', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
-			}
+			$page 			= 'add';
+			$description 	= 'add contact info';
+			$keywords 		= 'add, contact';
+			return view('addContact', ['page' => $page, 'description' => $description, 'keywords' => $keywords]);
 		} else {
 			return redirect('home');
 		}
+	}
+
+	public function addContact(Requests\EditContactRequest $request){
+		//run add function
+		$this->add('contact');
+		//return success view
+		$page 			= 'success';
+		$description 	= 'Success';
+		$keywords 		= 'success, yay, go you';
+		$type 			= 'add';
+		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 	//--------------------------------------endcontactstuff-----------------------------------------//
 
-	public function edit($type, $id){
+	public function edit($type, $filepath='', $id){
 		if($type == 'menu'){
 			$product = new \App\Products;
 			$product::where('id', $id)->update([
 				'name'			=> \Input::get('name'), 
 				'description' 	=> \Input::get('description'),
 				'price' 		=> \Input::get('price'),
-				'type'			=> \Input::get('type')
+				'type'			=> \Input::get('type'),
+				'img'			=> $filepath
+
 			]);
 		} else if($type == 'location'){
 			$location = new \App\Locations;
@@ -367,7 +404,8 @@ class AdminController extends Controller {
 				'name'			=> \Input::get('name'), 
 				'description' 	=> \Input::get('description'),
 				'lat' 			=> \Input::get('lat'),
-				'lng' 			=> \Input::get('lng')
+				'lng' 			=> \Input::get('lng'),
+				'img'			=> $filepath
 			]);
 		} else if($type == 'contact'){
 			$contact = new \App\Contact;
@@ -380,7 +418,8 @@ class AdminController extends Controller {
 			$merch::where('id', $id)->update([
 				'name'			=> \Input::get('name'), 
 				'description' 	=> \Input::get('description'),
-				'price' 		=> \Input::get('price')
+				'price' 		=> \Input::get('price'),
+				'img'			=> $filepath
 			]);
 		}
 	}
@@ -421,7 +460,7 @@ class AdminController extends Controller {
 		}
 	}
 
-	public function isUploaded($type){
+	public function isUploaded($type, $addEdit, $id=''){
 		//check if the file reached its temporary location
 		$uploaded = is_uploaded_file($_FILES['image']['tmp_name']);
 		if($uploaded){
@@ -433,7 +472,11 @@ class AdminController extends Controller {
 				//double check if the file exists where it was moved to
 				$exists = file_exists($filepath);
 				if($exists) {
-					$this->add($type, basename($filepath));
+					if($addEdit == 'add'){
+						$this->add($type, basename($filepath));
+					} else {
+						$this->edit($type, basename($filepath), $id);
+					}
 				}
 			}
 		}

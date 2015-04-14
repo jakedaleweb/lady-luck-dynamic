@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-<div id="blurbContainer"class="cf">
+<div id="blurbContainer" class="cf">
 	<div class="blurb">
 		<h2>Menu</h2>
 		<p>All our food is prepared fresh and on site daily, you can check out our ever-growing range <br/><a href="menu.html">right now</a></p>

@@ -1,9 +1,9 @@
 @extends('app')
 
 @section('content')
-	<div id="blurbContainer"class="cf">
+	<div id="blurbContainer" class="cf">
 		<div class="blurb">
-			<img src="img/phone.png">
+			<img src="img/phone.png" alt="hand holding phone">
 			<h2>Phone</h2>
 			<ul id="phone">
 				@foreach($phone as $number)
@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="blurb">
-			<img src="img/post.png">
+			<img src="img/post.png" alt="person writing at desk">
 			<h2>Post</h2>
 			<ul>
 				@foreach($post as $address)
@@ -31,7 +31,7 @@
 		</div>
 
 		<div class="blurb">
-			<img src="img/email.png">
+			<img src="img/email.png" alt="laptop computer">
 			<h2>Email</h2>
 			<ul>
 				@foreach($email as $emailAddress)

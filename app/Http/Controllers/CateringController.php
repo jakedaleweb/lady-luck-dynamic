@@ -176,7 +176,7 @@ class CateringController extends Controller {
 		$request->setTxnData3( \Request::input('orderEmail') );
 
 		\Session::put('orderDate', \Request::input('orderDate'));
-		\Session::put('delivery', \Request::input('delivery'));
+		\Session::put('delivery' , \Request::input('delivery'));
 		// Convert the request into XML
 		$request_string = $pxpay->makeRequest($request);
 		// Send the request

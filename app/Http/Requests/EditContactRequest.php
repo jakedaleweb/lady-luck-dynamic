@@ -2,7 +2,7 @@
 
 use App\Http\Requests\Request;
 
-class OrderCateringRequest extends Request {
+class EditContactRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class OrderCateringRequest extends Request {
 	public function rules()
 	{
 		return [
-			'orderName' 	=> 'required|min:2|max:40',
-	        'orderAddress' 	=> 'min:20',
-	        'orderEmail' 	=> 'required|email',
-	        'orderDate' 	=> 'required|min:10',
-	        'delivery' 		=> 'required|in:deliver,pickup'
+	        'description' 	=> 'required|min:10',
+	        'type' 			=> 'required|in:phone,post,email'
 		];
 	}
 

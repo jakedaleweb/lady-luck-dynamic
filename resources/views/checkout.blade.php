@@ -22,7 +22,6 @@
 
 		<h2>Total Cost:${{$totalPrice}}</h2>
 		<h2>Total items: {{$totalQuan}}</h2>
-		<h2></h2>
 		<form action="/catering/checkout" method="post" id="checkoutForm">
 			<p>
 				<label for="orderName">Your Name: </label>
@@ -36,7 +35,7 @@
 				<label for="orderAddress">Catering Address: </label>
 			</p>
 			<p>
-				<textarea type="text" id="orderAddress" name="orderAddress">{{\Input::old('orderAddress')}}</textarea>
+				<textarea id="orderAddress" name="orderAddress">{{\Input::old('orderAddress')}}</textarea>
 				{!!$errors->first('orderAddress', '<span>:message</span>')!!}	
 			</p>
 			<p>
