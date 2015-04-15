@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 14, 2015 at 07:45 am
+-- Generation Time: Apr 15, 2015 at 06:08 am
 -- Server version: 5.5.36
 -- PHP Version: 5.4.27
 
@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS `locations` (
 --
 
 INSERT INTO `locations` (`id`, `name`, `description`, `img`, `lat`, `lng`, `created_at`, `updated_at`) VALUES
-(1, 'Lady Luck Caravan, Kaiwharawhara', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Screen Shot 2015-03-06 at 4.44.41 pm.png', -41.25645900, 174.79512300, '0000-00-00 00:00:00', '2015-04-13 16:24:34'),
-(3, 'Lady Luck Miramar', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Screen Shot 2015-03-27 at 6.12.54 pm.png', -41.32149640, 174.81285870, '0000-00-00 00:00:00', '2015-04-13 16:12:38');
+(1, 'Lady Luck Caravan, Kaiwharawhara', 'The original Lady Luck is a retro Caravan located in\r\nPlacemakers, Kaiwharawhara. This is where it all began, and\r\nwe still make our food fresh here to this day.\r\nopen mon-fri 7.00-3.00 and saturdays 8.30-3.00', 'ladyluckkaiwhara.png', -41.25645900, 174.79512300, '0000-00-00 00:00:00', '2015-04-14 16:00:59'),
+(3, 'Lady Luck Miramar', 'Lady Luck Miramar is our second venture, located conveniently close to Wellington airport. Here we serve the same great food and a few new additions in our cool new retro kitchen!\r\nopen mon-fri 7.30-3.00', 'ladyluckmiramar.png', -41.32149640, 174.81285870, '0000-00-00 00:00:00', '2015-04-14 16:02:24');
 
 -- --------------------------------------------------------
 
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `products`
@@ -217,10 +217,14 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `type`, `created_at`, `updated_at`) VALUES
 (3, 'slice', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'mushroom-pie.jpg', 3.50, 'cold', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 'pies', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Screen Shot 2015-03-18 at 5.39.36 pm.png', 5.50, 'hot', '0000-00-00 00:00:00', '2015-04-13 16:22:36'),
-(5, 'sausage roll', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'mushroom-pie.jpg', 3.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 'jakesitem', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Screen Shot 2015-03-27 at 6.12.54 pm.png', 6.00, 'cold', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(9, 'Steak Pie', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Screen Shot 2015-03-27 at 6.12.54 pm.png', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(10, 'Savoury Mince', 'Our Mince pies are made with our freshly\r\ncooked mince mix with Veges and Lady Luck’s trademark flavour, this is simplicity at its best.', 'mushroom-pie.jpg', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 'Bacon & Egg', 'With big chunks of bacon and onion mixed in with egg this take on a kiwi classic is the perfect\r\nbreakfast food.', 'mushroom-pie.jpg', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 'Mince & Cheese', 'A mixture of Mince and tasty cheese, simple flavours sure to please the pickiest food critic.', 'mushroom-pie.jpg', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 'Steak & Cheese', 'Our Steak mixture cooks for hours at a time to make sure your meal is as tender as it is delicious.', 'mushroom-pie.jpg', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 'Steak & Creamy Mushroom', 'Combine our garlic creamy sauce with\r\nmushrooms and our tender steak and this is what you get.', 'mushroom-pie.jpg', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 'Roast Chicken & Mushroom', 'This gourmet pie is a mixture of our garlic creamy mushroom and freshly roasted shredded chicken.', 'mushroom-pie.jpg', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 'Sausage Roll', 'Our sausage rolls are delicious and incredible value for money, we are sure your stomach will agree.', 'mushroom-pie.jpg', 5.50, 'hot', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 'Vege Roll', 'Imaging a sausage roll but with cheese and rolled oats, perfect for our vegetarian\r\ncustomers.', 'Screen Shot 2015-03-27 at 6.12.54 pm.png', 5.50, 'hot', '0000-00-00 00:00:00', '2015-04-14 15:49:49');
 
 -- --------------------------------------------------------
 
@@ -245,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'ladyluckadmin', '-', '$2y$10$sRwQXUTkrA8YJKfSB7mjPe6imISnPc35ivGc8UBG2oBUExLcvFIxm', 'rbMCVpH95nDXbnQnZsuyzGUgbRj5GwZGSn4yOOrcmUacJnWyfOIeTjzAFfoj', '0000-00-00 00:00:00', '2015-04-13 17:29:03');
+(1, 'ladyluckadmin', '-', '$2y$10$sRwQXUTkrA8YJKfSB7mjPe6imISnPc35ivGc8UBG2oBUExLcvFIxm', '7k4STmxZ47jPMIuazuif6armkRntRFX8pvy9oTyTxuvZ75JExesi39x2D63S', '0000-00-00 00:00:00', '2015-04-13 17:47:39');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
