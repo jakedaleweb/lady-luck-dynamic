@@ -111,7 +111,9 @@ class CateringController extends Controller {
 		//empty cart
 		\Session::forget('cart');
 		//set page title
-		$page = 'catering';
+		$page 			= 'catering';
+		$description 	= 'Catering Page of Lady Luck, order food online';
+		$keywords 		= 'pies, home, lady luck, lady, luck, food, catering, coffee, Wellington, new zealand, order, cater, buy, online, cart, shop, deliver, delivery';
 		//create new instance of the products model
 		$products = new \App\Products;
 		//get all items
