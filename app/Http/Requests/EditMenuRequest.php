@@ -23,7 +23,7 @@ class EditMenuRequest extends Request {
 	{
 		return [
 			'name' 			=> 'required|min:2|max:40',
-	        'description' 	=> 'min:200|max:250',
+	        'description' 	=> 'min:90|max:200',
 	        'price' 		=> 'required|max:6|min:1',
 	        'type' 			=> 'required|in:hot,cold,drink',
 	        'image' 		=> ''

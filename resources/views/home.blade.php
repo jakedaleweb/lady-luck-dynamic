@@ -24,7 +24,7 @@
 @section('scripts')
 	<script src="js/instafeed.min.js"></script>
 	<script>
-	     //normally it would be a bad idea to put my token in here but it has only basic authorization
+	    //normally it would be a bad idea to put my token in here but it has only basic authorization
      	var userFeed = new Instafeed({
 	        get: 'user',
 	        userId: 1083152042,

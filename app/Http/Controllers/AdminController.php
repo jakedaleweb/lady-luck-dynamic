@@ -26,7 +26,7 @@ class AdminController extends Controller {
 		//check admin
 		if (\Auth::check()){
 		    $page 			= 'Admin';
-			$description 	= 'What are you ding here? shoo.';
+			$description 	= 'What are you doing here? shoo.';
 			$keywords 		= 'nothing, to, see, here';
 			//return view of page
 	       	return view('admin', ['page' => $page, 'keywords' => $keywords, 'description' => $description]);
@@ -54,7 +54,7 @@ class AdminController extends Controller {
 			$orders 		= new \App\Orders;
 			$allOrders  	= $orders::where('status', '=', 'paid')->get();; 
 			$page 			= 'Orders';
-			$description 	= 'What are you ding here? shoo.';
+			$description 	= 'What are you doing here? shoo.';
 			$keywords 		= 'nothing, to, see, here';
 			//return view of orders page
 			return view('orders', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'orders' => $allOrders]);
@@ -87,7 +87,7 @@ class AdminController extends Controller {
 				$grandTotal += $product->quantity * $product->price;
 			}
 			$page 			= 'Orders';
-			$description 	= 'What are you ding here? shoo.';
+			$description 	= 'What are you doing here? shoo.';
 			$keywords 		= 'nothing, to, see, here';
 			//return view of order page
 			return view('order', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'order' => $order, 'products' => $products, 'total' => $grandTotal]);
