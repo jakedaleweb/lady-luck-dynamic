@@ -39,11 +39,11 @@ class PagesController extends Controller {
 		//get items from cart
 		if(\Session::has('cart')){
 			$cart = \Session::get('cart');
-			//return view of page
+			//return view of page with cart
 			return view('catering', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'menu' => $menu, 'cart' => $cart]);
 			//return($array);
 		} else {
-			//return view of page
+			//return view of page without cart
 			return view('catering', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'menu' => $menu]);
 		}
 	}

@@ -432,26 +432,43 @@ class AdminController extends Controller {
 	//--------------------------------------endcontactstuff-----------------------------------------//
 
 	//edits an item in the db
-	public function edit($type, $filepath='', $id){
+	public function edit($type, $id, $filepath=''){
 		if($type == 'menu'){
 			$product = new \App\Products;
-			$product::where('id', $id)->update([
-				'name'			=> \Input::get('name'), 
-				'description' 	=> \Input::get('description'),
-				'price' 		=> \Input::get('price'),
-				'type'			=> \Input::get('type'),
-				'img'			=> $filepath
-
-			]);
+			if($filepath != ''){
+				$product::where('id', $id)->update([
+					'name'			=> \Input::get('name'), 
+					'description' 	=> \Input::get('description'),
+					'price' 		=> \Input::get('price'),
+					'type'			=> \Input::get('type'),
+					'img'			=> $filepath
+				]);
+			} else {
+				$product::where('id', $id)->update([
+					'name'			=> \Input::get('name'), 
+					'description' 	=> \Input::get('description'),
+					'price' 		=> \Input::get('price'),
+					'type'			=> \Input::get('type')
+				]);
+			}
 		} else if($type == 'location'){
 			$location = new \App\Locations;
-			$location::where('id', $id)->update([
-				'name'			=> \Input::get('name'), 
-				'description' 	=> \Input::get('description'),
-				'lat' 			=> \Input::get('lat'),
-				'lng' 			=> \Input::get('lng'),
-				'img'			=> $filepath
-			]);
+			if($filepath != ''){
+				$location::where('id', $id)->update([
+					'name'			=> \Input::get('name'), 
+					'description' 	=> \Input::get('description'),
+					'lat' 			=> \Input::get('lat'),
+					'lng' 			=> \Input::get('lng'),
+					'img'			=> $filepath
+				]);
+			} else {
+				$location::where('id', $id)->update([
+					'name'			=> \Input::get('name'), 
+					'description' 	=> \Input::get('description'),
+					'lat' 			=> \Input::get('lat'),
+					'lng' 			=> \Input::get('lng')
+				]);
+			}
 		} else if($type == 'contact'){
 			$contact = new \App\Contact;
 			$contact::where('id', $id)->update([
@@ -460,12 +477,21 @@ class AdminController extends Controller {
 			]);
 		} else if($type == 'merch'){
 			$merch = new \App\Merch;
-			$merch::where('id', $id)->update([
-				'name'			=> \Input::get('name'), 
-				'description' 	=> \Input::get('description'),
-				'price' 		=> \Input::get('price'),
-				'img'			=> $filepath
-			]);
+			if($filepath != ''){
+				$merch::where('id', $id)->update([
+					'name'			=> \Input::get('name'), 
+					'description' 	=> \Input::get('description'),
+					'price' 		=> \Input::get('price'),
+					'img'			=> $filepath
+				]);
+			} else {
+				$merch::where('id', $id)->update([
+					'name'			=> \Input::get('name'), 
+					'description' 	=> \Input::get('description'),
+					'price' 		=> \Input::get('price')
+				]);
+			}
+			
 		}
 	}
 
@@ -508,23 +534,31 @@ class AdminController extends Controller {
 
 	//function to add upload image, redirects to either add() or edit()s
 	public function isUploaded($type, $addEdit, $id=''){
-		//check if the file reached its temporary location
-		$uploaded = is_uploaded_file($_FILES['image']['tmp_name']);
-		if($uploaded){
-			//specify a file path
-			$filepath = 'img/'.$_FILES['image']['name'];
-			//move from the temp location to the specified file path
-			$moved = move_uploaded_file($_FILES['image']['tmp_name'], $filepath);
-			if($moved) {
-				//double check if the file exists where it was moved to
-				$exists = file_exists($filepath);
-				if($exists) {
-					if($addEdit == 'add'){
-						$this->add($type, basename($filepath));
-					} else {
-						$this->edit($type, basename($filepath), $id);
+		if(isset($_FILES['image']) && $_FILES['image']['size'] > 0){
+			//check if the file reached its temporary location
+			$uploaded = is_uploaded_file($_FILES['image']['tmp_name']);
+			if($uploaded){
+				//specify a file path
+				$filepath = 'img/'.uniqid().$_FILES['image']['name'];
+				//move from the temp location to the specified file path
+				$moved = move_uploaded_file($_FILES['image']['tmp_name'], $filepath);
+				if($moved) {
+					//double check if the file exists where it was moved to
+					$exists = file_exists($filepath);
+					if($exists) {
+						if($addEdit == 'add'){
+							$this->add($type, basename($filepath));
+						} else {
+							$this->edit($type, $id, basename($filepath));
+						}
 					}
 				}
+			}
+		} else {
+			if($addEdit == 'add'){
+				$this->add($type);
+			} else {
+				$this->edit($type, $id);
 			}
 		}
 	}

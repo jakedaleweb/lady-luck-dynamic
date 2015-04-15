@@ -23,7 +23,7 @@ class EditMerchRequest extends Request {
 	{
 		return [
 			'name' 			=> 'required|min:2|max:40',
-	        'description' 	=> 'min:200|max:250',
+	        'description' 	=> 'min:100|max:250',
 	        'price' 		=> 'required|max:6|min:1',
 	        'image' 		=> ''
 		];

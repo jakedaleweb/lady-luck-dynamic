@@ -138,8 +138,13 @@ class CateringController extends Controller {
 			//if cart not empty
 			if(\Session::has('cart')){
 				//run the function that processes the order
-				$this -> addCartToDB();
-				return redirect('catering/checkout/success');
+				$success = $this -> addCartToDB();
+				if($success){
+					return redirect('catering/checkout/success');	
+				} else {
+					//return error page
+					return redirect('catering/checkout/error')
+				}
 			} else {
 				return redirect('/catering');
 			}
@@ -223,6 +228,9 @@ class CateringController extends Controller {
 			}
 			//clear the cart
 			\Session::forget('cart');
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -232,6 +240,14 @@ class CateringController extends Controller {
 		$keywords 		= 'success, yay, go you';
 		$type = 'order';
 		return view('successOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
+	}
+
+	public function fail() {
+		$page 			= 'error';
+		$description 	= 'error';
+		$keywords 		= 'error, oops, try, again';
+		$type = 'order';
+		return view('errorOrder', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'type' => $type]);
 	}
 	
 }

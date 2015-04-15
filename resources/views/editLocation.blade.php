@@ -36,6 +36,7 @@
 			<p>
 				<label for="image">Image</label>
 			</p>
+			<img src='{{asset("/img/$location->img")}}'>
 			<h6>For best results use a square image</h6>
 			<p>
 				<input type="file" name="image" id="image">

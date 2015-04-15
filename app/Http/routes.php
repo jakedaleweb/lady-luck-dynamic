@@ -29,6 +29,7 @@ Route::get('catering/checkout', 		'CateringController@checkout');
 Route::post('catering', 				'CateringController@cartFunctions');
 Route::post('catering/checkout', 		'CateringController@processCaterForm');
 Route::get('catering/checkout/success', 'CateringController@successOrder');
+Route::get('catering/checkout/error', 	'CateringController@failOrder');
 
 Route::get('merch', 					'PagesController@merch');
 Route::get('merch/{id}', 				'MerchController@showItem');
