@@ -40,7 +40,7 @@ class PagesController extends Controller {
 		if(\Session::has('cart')){
 			$cart = \Session::get('cart');
 			//return view of page
-			return view('catering', ['page' => $page, 'menu' => $menu, 'cart' => $cart]);
+			return view('catering', ['page' => $page, 'description' => $description, 'keywords' => $keywords, 'menu' => $menu, 'cart' => $cart]);
 			//return($array);
 		} else {
 			//return view of page
