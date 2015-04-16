@@ -303,7 +303,7 @@ class AdminController extends Controller {
 			//delete product
 			$locations = new \App\Locations;
 			$location = $locations::where('id', '=', $id)->get()->first();
-			unlink('/public/img/'.$location->img);
+			unlink('img/'.$location->img);
 			$locations->where('id', '=', $id)->delete();
 			//show success page
 			$page 			= 'success';
