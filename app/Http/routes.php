@@ -56,7 +56,9 @@ Route::get('add/contact', 				'AdminController@showAddContact');
 Route::post('add/contact', 				'AdminController@addContact');
 
 Route::get('orders', 					'AdminController@orders');
-Route::get('orders/{id}', 				'AdminController@order');
+Route::get('orders/{type}', 			'AdminController@orders');
+Route::get('order/{id}', 				'AdminController@order');
+Route::get('/order/complete/{id}',		'AdminController@completeOrder');
 
 Route::get('adminLogin', 				'PagesController@admin');
 Route::post('adminLogin', 				'AdminController@verifyLogin');

@@ -47,17 +47,23 @@ class AdminController extends Controller {
 	//--------------------------------------enduserstuff---------------------------------------------//
 
 	//displays the orders page
-	public function orders(){
+	public function orders($status=''){
 		//check admin
 		if(\Auth::check()){
-			//get order stuff
-			$orders 		= new \App\Orders;
-			$allOrders  	= $orders::where('status', '=', 'paid')->get();; 
+			$allOrders;
+			$orders = new \App\Orders;
+			if($status == 'complete'){
+				$allOrders  	= $orders::where('status', '=', 'complete')->get(); 
+				$status = 'Complete';
+			} else {
+				$allOrders  	= $orders::where('status', '=', 'paid')->get(); 
+				$status = 'Paid';
+			}
 			$page 			= 'Orders';
 			$description 	= 'What are you doing here? shoo.';
 			$keywords 		= 'nothing, to, see, here';
 			//return view of orders page
-			return view('orders', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'orders' => $allOrders]);
+			return view('orders', ['page' => $page, 'keywords' => $keywords, 'description' => $description, 'orders' => $allOrders, 'status' => $status]);
 		} else {
 			//redirect to home page
 			return redirect('home');
@@ -95,6 +101,20 @@ class AdminController extends Controller {
 			//redirect to home
 			return redirect('home');
 		}
+	}
+
+	//function to change orders status once completed
+	public function completeOrder($id){
+		if(\Auth::check()){
+			$orders 		= new \App\Orders;
+			$order  		= $orders::where('id', $id)->update([
+				'status' => 'complete'
+			]); 
+			return redirect('orders/complete');
+		} else {
+			return redirect('home');
+		}
+		
 	}
 
 	//--------------------------------------menustuff------------------------------------------------//
