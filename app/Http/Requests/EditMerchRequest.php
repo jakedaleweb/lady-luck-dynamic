@@ -24,8 +24,8 @@ class EditMerchRequest extends Request {
 		return [
 			'name' 			=> 'required|min:2|max:40',
 	        'description' 	=> 'min:100|max:250',
-	        'price' 		=> 'required|max:6|min:1',
-	        'image' 		=> ''
+	        'price' 		=> 'required|regex:/^[0-9]{1,3}(\.[0-9]{1,2})?$/',
+	        'image' 		=> 'required_if:add,add'
 		];
 	}
 

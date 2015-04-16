@@ -24,9 +24,9 @@ class EditLocationRequest extends Request {
 		return [
 			'name' 			=> 'required|min:2|max:40',
 	        'description' 	=> 'min:150|max:250',
-	        'lat' 			=> 'required|max:11|min:6',
-	        'lng' 			=> 'required|max:11|min:6',
-	        'image' 		=> ''
+	        'lat' 			=> 'required|max:13|min:6',
+	        'lng' 			=> 'required|max:13|min:6',
+	        'image' 		=> 'required_if:add,add'
 		];
 	}
 

@@ -143,7 +143,7 @@ class CateringController extends Controller {
 					return redirect('catering/checkout/success');	
 				} else {
 					//return error page
-					return redirect('catering/checkout/error')
+					return redirect('catering/checkout/error');
 				}
 			} else {
 				return redirect('/catering');

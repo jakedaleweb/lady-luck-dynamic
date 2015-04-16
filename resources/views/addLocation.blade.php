@@ -34,6 +34,7 @@
 			</p>
 			<p>
 				<label for="image">Image</label>
+				{!!$errors->first('lng', '<span>:message</span>')!!}
 			</p>
 			<h6>For best results use a square image</h6>
 			<p>

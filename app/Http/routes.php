@@ -50,7 +50,7 @@ Route::post('add/location', 			'AdminController@addLocation');
 
 Route::get('contact', 					'PagesController@contact');
 Route::get('edit/contact/{id}', 		'AdminController@showEditContact');
-Route::post('edit/contact/{id}', 		'AdminController@editContact');
+Route::post('edit/contact/{id}', 		['as' => 'contact.edit', 'uses' => 'AdminController@editContact']);
 Route::get('delete/contact/{id}', 		'AdminController@deleteContact');
 Route::get('add/contact', 				'AdminController@showAddContact');
 Route::post('add/contact', 				'AdminController@addContact');

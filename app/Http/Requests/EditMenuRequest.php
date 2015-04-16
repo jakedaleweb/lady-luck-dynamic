@@ -24,9 +24,9 @@ class EditMenuRequest extends Request {
 		return [
 			'name' 			=> 'required|min:2|max:40',
 	        'description' 	=> 'min:90|max:200',
-	        'price' 		=> 'required|max:6|min:1',
+	        'price' 		=> 'required|regex:/^[0-9]{1,2}(\.[0-9]{1,2})?$/',
 	        'type' 			=> 'required|in:hot,cold,drink',
-	        'image' 		=> ''
+	        'image' 		=> 'required_if:add,add'
 		];
 	}
 

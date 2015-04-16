@@ -107,6 +107,8 @@ class AdminController extends Controller {
 			if( isset($_GET['deleteProduct']) && $_GET['deleteProduct'] == 'true'){
 			//delete product
 			$menu = new \App\Products;
+			$product = $menu::where('id', '=', $id)->get()->first();
+			unlink('img/'.$product->img);
 			$menu->where('id', '=', $id)->delete();
 			//show success page
 			$page 			= 'success';
@@ -134,9 +136,20 @@ class AdminController extends Controller {
 	public function showEditMenu($id){
 		//check admin
 		if(\Auth::check()){
-			$menu = new \App\Products;
-			$product = $menu::where('id', '=', $id)->get()->first();
-			//show view with edit form and send it the item
+			$product;
+			if(!\Input::old('edit') == 'edit'){
+				$menu = new \App\Products;
+				$product = $menu::where('id', '=', $id)->get()->first();
+				//show view with edit form and send it the item
+			}else{
+				$product = (object) array(
+					'name' 			=> \Input::old('name'),
+					'description' 	=> \Input::old('description'),
+					'price' 		=> \Input::old('price'),
+					'type' 			=> \Input::old('type'),
+					'img' 			=> \Input::old('oldimg')
+				);
+			}
 			$page 			= 'edit';
 			$description 	= 'Edit a product';
 			$keywords 		= 'edit, products';
@@ -193,6 +206,8 @@ class AdminController extends Controller {
 			if( isset($_GET['deleteProduct']) && $_GET['deleteProduct'] == 'true'){
 			//delete product
 			$merch = new \App\Merch;
+			$item = $merch::where('id', '=', $id)->get()->first();
+			unlink('img/'.$item->img);
 			$merch->where('id', '=', $id)->delete();
 			//show success page
 			$page 			= 'success';
@@ -218,9 +233,19 @@ class AdminController extends Controller {
 	//function to show the edit merch page
 	public function showEditMerch($id){
 		if(\Auth::check()){
-			//if form has been submitted
-			$merch 	 = new \App\Merch;
-			$product = $merch::where('id', '=', $id)->get()->first();
+			$product;
+			if(!\Input::old('edit') == 'edit'){
+				$merch 	 = new \App\Merch;
+				$product = $merch::where('id', '=', $id)->get()->first();
+			} else {
+				$product = (object) array(
+					'name' 			=> \Input::old('name'),
+					'description' 	=> \Input::old('description'),
+					'price' 		=> \Input::old('price'),
+					'type' 			=> \Input::old('type'),
+					'img' 			=> \Input::old('oldimg')
+				);
+			}
 			//show view with edit form and send it the item
 			$page 			= 'edit';
 			$description 	= 'Edit a product';
@@ -277,6 +302,8 @@ class AdminController extends Controller {
 			if( isset($_GET['deleteProduct']) && $_GET['deleteProduct'] == 'true'){
 			//delete product
 			$locations = new \App\Locations;
+			$location = $locations::where('id', '=', $id)->get()->first();
+			unlink('/public/img/'.$location->img);
 			$locations->where('id', '=', $id)->delete();
 			//show success page
 			$page 			= 'success';
@@ -302,8 +329,19 @@ class AdminController extends Controller {
 	//function to show the edit location page
 	public function showEditLocation($id){
 		if(\Auth::check()){
-			$locations 	 = new \App\Locations;
-			$location 	 = $locations::where('id', '=', $id)->get()->first();
+			$location;
+			if(!\Input::old('edit') == 'edit'){
+				$locations 	 = new \App\Locations;
+				$location 	 = $locations::where('id', '=', $id)->get()->first();
+			} else {
+				$location = (object) array(
+					'name' 			=> \Input::old('name'),
+					'description' 	=> \Input::old('description'),
+					'lat' 			=> \Input::old('lat'),
+					'lng' 			=> \Input::old('lng'),
+					'img' 			=> \Input::old('oldimg')
+				);
+			}
 			//show view with edit form and send it the item
 			$page 			= 'edit';
 			$description 	= 'Edit a product';
@@ -383,8 +421,16 @@ class AdminController extends Controller {
 	//function to show the edit contact page
 	public function showEditContact($id){
 		if(\Auth::check()){
-			$contacts 	 = new \App\Contact;
-			$contact 	 = $contacts::where('id', '=', $id)->get()->first();
+			$contact;
+			if(!\Input::old('edit') == 'edit'){
+				$contacts 	 = new \App\Contact;
+				$contact 	 = $contacts::where('id', '=', $id)->get()->first();
+			} else {
+				$contact = (object) array(
+					'description' 	=> \Input::old('description'),
+					'type' 			=> \Input::old('type')
+				);
+			}
 			//show view with edit form and send it the item
 			$page 			= 'edit';
 			$description 	= 'Edit contact info';

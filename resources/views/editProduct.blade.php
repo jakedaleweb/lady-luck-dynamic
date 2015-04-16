@@ -43,6 +43,7 @@
 				<label for="image">Image</label>
 			</p>
 			<img src='{{asset("/img/$product->img")}}'>
+			<input type="hidden" name="oldimg" value="{{$product->img}}"/>
 			<h6>For best results use a square image</h6>
 			<p>
 				<input type="file" name="image" id="image">
